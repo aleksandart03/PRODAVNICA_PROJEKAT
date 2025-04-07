@@ -25,9 +25,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['role'] = $user['role'];
 
         if ($user['role'] === 'admin') {
-            header("Location: admin.php");
+            header("Location: Users/admin.php");
         } else {
-            header("Location: user.php");
+            header("Location: Users/user.php");
         }
         exit();
     } else {
