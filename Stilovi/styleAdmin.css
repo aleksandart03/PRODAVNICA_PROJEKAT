@@ -1,0 +1,43 @@
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.sve {
+    background-color: rgb(219, 219, 226);
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+    height: 100vh;
+}
+
+.naslov {
+    padding: 100px;
+    margin: 100px;
+}
+
+
+
+.forma {
+    width: 300px;
+    height: 300px;
+    justify-content: center;
+    text-align: center;
+    padding: 100px;
+    margin: 120px;
+}
+
+.dugme {
+    width: 150px;
+    height: 80px;
+    margin: -30px;
+    border-radius: 100px;
+    background-color: blue;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+}
