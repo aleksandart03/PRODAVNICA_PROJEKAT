@@ -36,7 +36,6 @@ $conn->close();
 
 <body>
     <form method="POST">
-        <h1>Login</h1>
         <label for="username">Korisničko ime:</label>
         <input type="text" id="username" name="username" required><br>
 
