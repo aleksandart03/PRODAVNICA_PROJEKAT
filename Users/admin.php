@@ -22,6 +22,11 @@ require_once 'AdminContent/operacijeAdmin.php';
 <body>
     <h1 class="naslov">Dobrodošao, <?php echo $_SESSION['username']; ?> </h1>
 
+    <?php if (isset($message)) : ?>
+        <p><?php echo $message; ?></p>
+    <?php endif; ?>
+
+
     <div class="container">
 
 
@@ -52,10 +57,6 @@ require_once 'AdminContent/operacijeAdmin.php';
             <input type="text" name="category_name" placeholder="Naziv kategorije" required>
             <button type="submit" name="add_category">Dodaj kategoriju</button>
         </form>
-
-        <?php if (isset($message)) : ?>
-            <p><?php echo $message; ?></p>
-        <?php endif; ?>
 
         <form class="pretrazi" method="post" action="admin.php">
             <h3>Pretrazi proizvode (bez unosa prikazace sve dostupno)</h3>
