@@ -34,8 +34,6 @@ require_once 'AdminContent/operacijeAdmin.php';
             <select name="category_id" required>
 
                 <option value="">Izaberi kategoriju</option>
-
-
                 <?php include 'AdminContent/izaberiKategoriju.php'; ?>
             </select>
 
