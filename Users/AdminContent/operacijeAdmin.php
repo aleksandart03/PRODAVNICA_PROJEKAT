@@ -44,7 +44,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         } else {
             $message = "Došlo je do greške prilikom brisanja proizvoda.";
         }
-
         $stmt->close();
         $conn->close();
     }
@@ -94,7 +93,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $sql = "SELECT p.id, p.name, p.price, p.description, c.name AS category_name
             FROM products p
             JOIN categories c ON p.category_id = c.id
-            WHERE 1=1";  // 
+            WHERE 1=1";
 
 
         if (!empty($name_filter)) {
