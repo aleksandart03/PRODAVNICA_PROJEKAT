@@ -17,16 +17,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $result = $stmt->get_result();
 
         if ($result->num_rows > 0) {
-            $message = "Proizvod sa ovim  opisom već postoji.";
+            $message = "Proizvod sa ovim opisom već postoji.";
         } else {
             $sqlInsert = "INSERT INTO products (name, price, description, category_id) VALUES (?, ?, ?, ?)";
             $stmtInsert = $conn->prepare($sqlInsert);
             $stmtInsert->bind_param("sdsi", $name, $price, $description, $category_id);
-            if ($stmtInsert->execute()) {
-                $message = "Proizvod je uspešno dodat.";
-            } else {
-                $message = "Greška prilikom dodavanja proizvoda.";
-            }
+            $stmtInsert->execute();
         }
 
         $stmt->close();
@@ -54,23 +50,30 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     if (isset($_POST['add_category'])) {
+
         $category_name = $_POST['category_name'];
 
         if (!empty($category_name)) {
             $db = new Database();
             $conn = $db->getConnection();
 
-            $sql = "INSERT INTO categories (name) VALUES (?)";
-            $stmt = $conn->prepare($sql);
-            $stmt->bind_param("s", $category_name);
+            $checkSql = "SELECT * FROM categories WHERE name = ?";
+            $checkStmt = $conn->prepare($checkSql);
+            $checkStmt->bind_param("s", $category_name);
+            $checkStmt->execute();
+            $checkResult = $checkStmt->get_result();
 
-            if ($stmt->execute()) {
-                $message = "Kategorija je uspešno dodata!";
+            if ($checkResult->num_rows > 0) {
+                $message = "Kategorija sa ovim imenom već postoji!";
             } else {
-                $message = "Greška prilikom dodavanja kategorije.";
+                $sql = "INSERT INTO categories (name) VALUES (?)";
+                $stmt = $conn->prepare($sql);
+                $stmt->bind_param("s", $category_name);
+                $stmt->execute();
+                $stmt->close();
             }
 
-            $stmt->close();
+            $checkStmt->close();
             $conn->close();
         } else {
             $message = "Molimo popunite naziv kategorije!";
