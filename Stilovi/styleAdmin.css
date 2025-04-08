@@ -126,8 +126,11 @@ button:hover {
 
 
 p {
-    color: #333;
-    font-size: 16px;
+    color: red;
+    font-size: 26px;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    font-weight: bold;
 }
 
 
