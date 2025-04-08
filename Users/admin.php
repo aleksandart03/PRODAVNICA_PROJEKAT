@@ -20,7 +20,7 @@ require_once 'AdminContent/operacijeAdmin.php';
 </head>
 
 <body>
-    <h1 class="naslov">Dobrodošao, <?php echo $_SESSION['username']; ?> (admin)</h1>
+    <h1 class="naslov">Dobrodošao, <?php echo $_SESSION['username']; ?> </h1>
 
     <div class="container">
 
@@ -34,6 +34,7 @@ require_once 'AdminContent/operacijeAdmin.php';
             <select name="category_id" required>
 
                 <option value="">Izaberi kategoriju</option>
+
 
                 <?php include 'AdminContent/izaberiKategoriju.php'; ?>
             </select>
@@ -71,7 +72,7 @@ require_once 'AdminContent/operacijeAdmin.php';
 
         <div class="tabela">
             <?php if (isset($_POST['show_products']) && !empty($products)) : ?>
-                <h3 class="product-list-title">Lista svih proizvoda:</h3>
+                <h3 class="product-list-title">Tabela sa proizvodima: </h3>
                 <table class="product-table">
                     <thead>
                         <tr>
