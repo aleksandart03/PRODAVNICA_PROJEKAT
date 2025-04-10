@@ -10,7 +10,6 @@ h1, h2 {
     color: #333;
 }
 
-
 .proizvod {
     background-color: white;
     border-radius: 8px;
@@ -114,8 +113,6 @@ button:hover {
 .clear-btn:hover {
     background-color: #ec971f;
 }
-
-
 
 .view-cart-btn {
     background-color: #28a745;
