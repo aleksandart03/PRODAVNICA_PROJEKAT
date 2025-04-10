@@ -5,7 +5,6 @@ class Autorizacija
 {
     public $conn;
 
-
     public function __construct()
     {
         require_once 'database.php';
