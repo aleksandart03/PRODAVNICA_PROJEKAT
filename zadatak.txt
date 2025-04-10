@@ -1,3 +1,0 @@
-Promena logina da je izdvojim u poseban falj da ima klasu autorizacija u auth.php i da je pozivam u u svakom fajl
-da dodam login kao guest da mozes uci na sajt i da pristupim odmah prodavnici da napravim tabel
-u sql-u cart i product_cart da bude veza izmeju product i cart. 
