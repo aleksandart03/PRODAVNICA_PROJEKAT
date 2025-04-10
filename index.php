@@ -46,7 +46,6 @@ $conn->close();
         <?php endif; ?>
     </div>
 
-
     <h1>Dostupni proizvodi</h1>
 
     <h2>Filtriraj proizvode</h2>
