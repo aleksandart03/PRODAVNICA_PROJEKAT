@@ -148,3 +148,40 @@ button:hover {
 .opis  {
     font-size:18px;
 }
+
+
+.auth-container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin: 10px;
+}
+
+.auth-container span,
+.auth-container a {
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    color: #333;
+    margin-left: 10px;
+}
+
+.auth-container .login-btn,
+.auth-container .logout-btn {
+    background-color: #007bff;
+    color: white;
+    padding: 5px 10px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+.auth-container .login-btn:hover,
+.auth-container .logout-btn:hover {
+    background-color: #0056b3;
+}
+
+.auth-container .login-btn:active,
+.auth-container .logout-btn:active {
+    background-color: #004085;
+}

@@ -1,64 +1,23 @@
 <?php
 
+require_once 'functions.php';
 require_once 'database.php';
 require_once 'auth.php';
 
 $db = new Database();
 $conn = $db->getConnection();
 
-
 if (isset($_POST['add_to_cart'])) {
-    $product_id = $_POST['product_id'];
-
-    if (!isset($_SESSION['cart'])) {
-        $_SESSION['cart'] = [];
-    }
-
-    if (!in_array($product_id, $_SESSION['cart'])) {
-        $_SESSION['cart'][] = $product_id;
-    }
+    addToCart($_POST['product_id']);
 }
 
 $name = $_GET['name'] ?? '';
 $price = $_GET['price'] ?? '';
 $category_id = $_GET['category_id'] ?? '';
 
-$sql = "SELECT p.*, c.name as category_name FROM products p
-        JOIN categories c ON p.category_id = c.id
-        WHERE 1=1";
 
-$params = [];
-$types = '';
+$products = getProducts($conn, $name, $price, $category_id);
 
-if (!empty($name)) {
-    $sql .= " AND p.name LIKE ?";
-    $params[] = "%$name%";
-    $types .= "s";
-}
-
-if (!empty($price)) {
-    $sql .= " AND p.price <= ?";
-    $params[] = $price;
-    $types .= "d";
-}
-
-if (!empty($category_id)) {
-    $sql .= " AND p.category_id = ?";
-    $params[] = $category_id;
-    $types .= "i";
-}
-
-$stmt = $conn->prepare($sql);
-
-if (!empty($params)) {
-    $stmt->bind_param($types, ...$params);
-}
-
-$stmt->execute();
-$result = $stmt->get_result();
-$products = $result->fetch_all(MYSQLI_ASSOC);
-
-$stmt->close();
 $conn->close();
 
 
@@ -78,27 +37,28 @@ $conn->close();
 
 <body>
 
-    <div style="text-align: right; margin: 10px;">
+    <div class="auth-container">
         <?php if (Autorizacija::jeUlogovan()) : ?>
-            Dobrodošao, <?php echo htmlspecialchars($_SESSION['username']); ?> |
-            <a href="logout.php">Odjavi se</a>
+            <span>Dobrodošao, <?php echo htmlspecialchars($_SESSION['username']); ?> |</span>
+            <a href="logout.php" class="logout-btn">Odjavi se</a>
         <?php else : ?>
-            <a href="login.php">Uloguj se</a>
+            <a href="login.php" class="login-btn">Uloguj se</a>
         <?php endif; ?>
     </div>
+
 
     <h1>Dostupni proizvodi</h1>
 
     <h2>Filtriraj proizvode</h2>
-    <form method="get" action="user.php" class="filter-form">
-        <input type="text" name="name" placeholder="Naziv proizvoda" value="<?php echo isset($_GET['name']) ? htmlspecialchars($_GET['name']) : ''; ?>" class="filter-input">
+    <form method="get" action="index.php" class="filter-form">
+        <input type="text" name="name" placeholder="Naziv proizvoda" value="<?php echo isset($_GET['name']) ? ($_GET['name']) : ''; ?>" class="filter-input">
         <input type="number" name="price" placeholder="Cena do" value="<?php echo isset($_GET['price']) ? $_GET['price'] : ''; ?>" class="filter-input">
         <select name="category_id" class="filter-input">
             <option value="">Sve kategorije</option>
             <?php include 'izaberiKategorijuMain.php'; ?>
         </select>
         <button type="submit" class="filter-btn">Filtriraj</button>
-        <a href="user.php" class="clear-filters">
+        <a href="index.php" class="clear-filters">
             <button type="button" class="clear-btn">Prikaz svih proizvoda</button>
         </a>
     </form>

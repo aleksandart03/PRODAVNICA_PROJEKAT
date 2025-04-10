@@ -1,7 +1,6 @@
 <?php
 
-session_start();
-require_once 'database.php';
+require_once 'auth.php';
 
 $greska = "";
 
@@ -9,33 +8,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    $db = new Database();
-    $conn = $db->getConnection();
 
-    $sql = "SELECT * FROM users WHERE username=?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("s", $username);
-    $stmt->execute();
-    $rezultat = $stmt->get_result();
-    $user = $rezultat->fetch_assoc();
+    $autorizacija = new Autorizacija();
 
-    if ($user && password_verify($password, $user['password'])) {
-        $_SESSION['user_id'] = $user['id'];
-        $_SESSION['username'] = $user['username'];
-        $_SESSION['role'] = $user['role'];
 
-        if ($user['role'] === 'admin') {
+    if ($autorizacija->login($username, $password)) {
+
+        if (Autorizacija::jeAdmin()) {
             header("Location: Users/admin.php");
         } else {
-            header("Location: Users/user.php");
+            header("Location: index.php");
         }
         exit();
     } else {
         $greska = "Pogrešno korisničko ime ili lozinka!";
     }
-
-    $stmt->close();
-    $conn->close();
 }
 ?>
 
@@ -62,7 +49,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <?php if (!empty($greska)) : ?>
             <div class="error-message"><?php echo $greska; ?></div>
         <?php endif; ?>
+
+
+        <a href="index.php" class="nazad-dugme">Nazad na prodavnicu</a>
     </form>
+
+
 </body>
 
 </html>
