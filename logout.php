@@ -2,7 +2,7 @@
 
 require_once 'auth.php';
 
-Autorizacija::logout();
+$auth->logout();
 
 
 session_start();
