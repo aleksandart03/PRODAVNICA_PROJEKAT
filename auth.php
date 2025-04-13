@@ -1,19 +1,22 @@
 <?php
-session_start();
 
 class Autorizacija
 {
-    public $conn;
+    private $conn;
 
     public function __construct()
     {
         require_once 'database.php';
         $db = new Database();
         $this->conn = $db->getConnection();
+
+
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
     }
 
-
-    public static function pokreniSesiju()
+    public function pokreniSesiju()
     {
         if (!isset($_SESSION['role'])) {
             $_SESSION['role'] = 'guest';
@@ -21,24 +24,20 @@ class Autorizacija
         }
     }
 
-
-    public static function jeAdmin()
+    public function jeAdmin()
     {
         return isset($_SESSION['role']) && $_SESSION['role'] === 'admin';
     }
 
-
-    public static function jeUlogovan()
+    public function jeUlogovan()
     {
         return isset($_SESSION['user_id']);
     }
 
-
-    public static function jeGost()
+    public function jeGost()
     {
         return $_SESSION['role'] === 'guest';
     }
-
 
     public function login($username, $password)
     {
@@ -59,7 +58,7 @@ class Autorizacija
         return false;
     }
 
-    public static function logout()
+    public function logout()
     {
         session_start();
         session_unset();
@@ -67,4 +66,5 @@ class Autorizacija
     }
 }
 
-Autorizacija::pokreniSesiju();
+$auth = new Autorizacija();
+$auth->pokreniSesiju();
