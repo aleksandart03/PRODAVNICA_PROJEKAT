@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 require_once 'functions.php';
 require_once 'database.php';
 require_once 'auth.php';
@@ -7,22 +9,22 @@ require_once 'auth.php';
 $db = new Database();
 $conn = $db->getConnection();
 
-if (isset($_POST['add_to_cart'])) {
-    addToCart($_POST['product_id']);
-}
 
-$name = $_GET['name'] ?? '';
-$price = $_GET['price'] ?? '';
-$category_id = $_GET['category_id'] ?? '';
-
+$name = isset($_GET['name']) ? $_GET['name'] : '';
+$price = isset($_GET['price']) ? $_GET['price'] : '';
+$category_id = isset($_GET['category_id']) ? $_GET['category_id'] : '';
 
 $products = getProducts($conn, $name, $price, $category_id);
 
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_to_cart'])) {
+    $product_id = $_POST['product_id'];
+    addToCart($product_id, $conn);
+}
+
+
 $conn->close();
 
-
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -38,7 +40,7 @@ $conn->close();
 <body>
 
     <div class="auth-container">
-        <?php if (Autorizacija::jeUlogovan()) : ?>
+        <?php if ($auth->jeUlogovan()) : ?>
             <span>Dobrodošao, <?php echo htmlspecialchars($_SESSION['username']); ?> |</span>
             <a href="logout.php" class="logout-btn">Odjavi se</a>
         <?php else : ?>
