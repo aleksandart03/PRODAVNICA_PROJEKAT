@@ -5,14 +5,16 @@ require_once 'auth.php';
 $greska = "";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $username = $_POST['username'];
-    $password = $_POST['password'];
 
-    $autorizacija = new Autorizacija();
+    $username = filter_input(INPUT_POST, 'username',);
+    $password = filter_input(INPUT_POST, 'password',);
 
-    if ($autorizacija->login($username, $password)) {
+    $auth = new Autorizacija();
 
-        if (Autorizacija::jeAdmin()) {
+    if ($auth->login($username, $password)) {
+
+
+        if ($auth->jeAdmin()) {
             header("Location: Users/admin.php");
         } else {
             header("Location: index.php");
