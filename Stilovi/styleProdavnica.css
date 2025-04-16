@@ -142,6 +142,10 @@ button:hover {
 
 .view-cart-btn-container {
     text-align: center; 
+    position: fixed;
+    z-index: 999;
+    right: 20px;
+    bottom: 20px;
 
 }
 
