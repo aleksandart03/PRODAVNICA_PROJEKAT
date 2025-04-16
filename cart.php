@@ -20,6 +20,17 @@ if (isset($_POST['remove_item']) && isset($_POST['remove_id'])) {
     exit;
 }
 
+if (isset($_POST['change_quantity_id']) && isset($_POST['action'])) {
+    $productId = $_POST['change_quantity_id'];
+    $action = $_POST['action'];
+
+    changeQuantity($conn, $productId, $action);
+
+    header("Location: cart.php");
+    exit;
+}
+
+
 ?>
 
 <!DOCTYPE html>
@@ -29,6 +40,7 @@ if (isset($_POST['remove_item']) && isset($_POST['remove_id'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="Stilovi/styleKorpa.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <title>Korpa</title>
 </head>
 
@@ -54,6 +66,20 @@ if (isset($_POST['remove_item']) && isset($_POST['remove_id'])) {
                     }
                     ?>
 
+
+                    <form method="post" action="cart.php" style="display:inline;">
+                        <input type="hidden" name="change_quantity_id" value="<?php echo $product['id']; ?>">
+                        <input type="hidden" name="action" value="increase">
+                        <button class="plus" type="submit">+</button>
+                    </form>
+
+
+                    <form method="post" action="cart.php" style="display:inline;">
+                        <input type="hidden" name="change_quantity_id" value="<?php echo $product['id']; ?>">
+                        <input type="hidden" name="action" value="decrease">
+                        <button class="minus" type="submit">-</button>
+                    </form>
+
                     <form method="post" action="cart.php" style="display:inline;">
                         <input type="hidden" name="remove_id" value="<?php echo $product['id']; ?>">
                         <button type="submit" name="remove_item">Ukloni</button>
@@ -62,10 +88,20 @@ if (isset($_POST['remove_item']) && isset($_POST['remove_id'])) {
 
             <?php endforeach; ?>
         </ul>
-        <a href="index.php">Nazad na prodavnicu</a>
+        <?php $totalPrice = 0;
+        foreach ($productsInCart as $product) {
+            $quantity = isset($product['quantity']) ? $product['quantity'] : 1;
+            $totalPrice += $product['price'] * $quantity;
+        } ?>
+
+        <p><strong>Ukupna cena: </strong><?php echo number_format($totalPrice, 2); ?> $</p>
+
+        <p class="txt-korpa">Nazad na prodavnicu</p>
+        <a class="povratak" href="index.php"> <i class='bx bx-left-arrow-alt icon'></i></a>
     <?php else: ?>
         <p>Korpa je prazna</p>
-        <a href="index.php">Idi u prodavnicu</a>
+        <p class="txt-prazna">Nazad u prodavnicu</p>
+        <a class="povratak" href="index.php"> <i class='bx bx-left-arrow-alt icon'></i> </a>
     <?php endif; ?>
 </body>
 
