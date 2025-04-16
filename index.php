@@ -18,7 +18,8 @@ $products = getProducts($conn, $name, $price, $category_id);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_to_cart'])) {
     $product_id = $_POST['product_id'];
-    addToCart($product_id, $conn);
+    $quantity = (int)$_POST['quantity'];
+    addToCart($product_id, $conn, $quantity);
 }
 
 
@@ -33,6 +34,7 @@ $conn->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="Stilovi/styleProdavnica.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <title>Prodavnica</title>
 
 </head>
@@ -73,13 +75,18 @@ $conn->close();
 
             <form method="post" action="index.php">
                 <input type="hidden" name="product_id" value="<?php echo $product['id']; ?>">
+
+                <label class="kolicina" for="quantity_<?php echo $product['id']; ?>">Količina:</label>
+                <input class="input-kolicina" type="number" name="quantity" id="quantity_<?php echo $product['id']; ?>" value="1" min="1" required>
+
                 <button type="submit" name="add_to_cart">Dodaj u korpu</button>
             </form>
+
         </div>
     <?php endforeach; ?>
 
     <div class="view-cart-btn-container">
-        <a href="cart.php" class="view-cart-btn">Pogledaj korpu</a>
+        <a href="cart.php" class="view-cart-btn"><i class='bx bxs-cart'></i></a>
     </div>
 
 </body>
