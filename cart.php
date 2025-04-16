@@ -92,11 +92,18 @@ if (isset($_POST['change_quantity_id']) && isset($_POST['action'])) {
         $totalPrice = 0;
         foreach ($productsInCart as $product) {
             $product_id = $product['id'];
-            $quantity = isset($_SESSION['cart'][$product_id]) ? $_SESSION['cart'][$product_id] : 1;
+
+
+            if (!isset($product['quantity']) && isset($_SESSION['cart'][$product_id])) {
+                $quantity = $_SESSION['cart'][$product_id];
+            } else {
+
+                $quantity = $product['quantity'];
+            }
+
             $subtotal = $product['price'] * $quantity;
             $totalPrice += $subtotal;
         }
-
         ?>
 
         <p><strong>Ukupna cena: </strong><?php echo number_format($totalPrice, 2); ?> $</p>
