@@ -66,6 +66,10 @@ $conn->close();
         </a>
     </form>
 
+    <div class="view-cart-btn-container">
+        <a href="cart.php" class="view-cart-btn"><i class='bx bxs-cart'></i></a>
+    </div>
+
     <?php foreach ($products as $product): ?>
         <div class="proizvod">
             <h3><?php echo $product['name']; ?></h3>
@@ -85,9 +89,7 @@ $conn->close();
         </div>
     <?php endforeach; ?>
 
-    <div class="view-cart-btn-container">
-        <a href="cart.php" class="view-cart-btn"><i class='bx bxs-cart'></i></a>
-    </div>
+
 
 </body>
 
