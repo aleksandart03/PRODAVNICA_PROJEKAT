@@ -88,11 +88,16 @@ if (isset($_POST['change_quantity_id']) && isset($_POST['action'])) {
 
             <?php endforeach; ?>
         </ul>
-        <?php $totalPrice = 0;
+        <?php
+        $totalPrice = 0;
         foreach ($productsInCart as $product) {
-            $quantity = isset($product['quantity']) ? $product['quantity'] : 1;
-            $totalPrice += $product['price'] * $quantity;
-        } ?>
+            $product_id = $product['id'];
+            $quantity = isset($_SESSION['cart'][$product_id]) ? $_SESSION['cart'][$product_id] : 1;
+            $subtotal = $product['price'] * $quantity;
+            $totalPrice += $subtotal;
+        }
+
+        ?>
 
         <p><strong>Ukupna cena: </strong><?php echo number_format($totalPrice, 2); ?> $</p>
 
