@@ -1,5 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+}
+
+
 body {
-    font-family: Arial, sans-serif;
     background-color: #f4f4f4;
     color: #333;
     margin: 0;
@@ -64,10 +74,43 @@ form button {
 }
 
 form button:hover {
-    background-color: #c0392b;
+    background-color: #e437158a;
 }
 
-a {
+
+
+form .minus {
+    background-color: rgb(226, 133, 133);
+    margin: 5px;
+    width: 30px;
+    font-weight: bold;
+}
+
+form .plus {
+    background-color: rgb(153, 241, 153);
+    font-weight: bold;
+    
+}
+
+form .plus:hover {
+    background-color: green;
+}
+
+form .minus:hover {
+    background-color: red;
+}
+p {
+ margin-top: 20px;
+}
+
+.txt-korp,.txt-prazna {
+    margin-top: 20px;
+    font-weight: bold;
+}
+
+.povratak {
+    font-weight: bold;
+    font-size: 25;
     margin-top: 10px;
     margin-bottom: 30px;
     display: inline-block;
@@ -79,6 +122,6 @@ a {
     font-size: 1em;
 }
 
-a:hover {
+.povratak:hover {
     background-color: #0056b3;
 }
